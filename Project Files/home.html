@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fabric Pattern Classifier</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+    }
+
+    .navbar {
+      background-color: #0077b6;
+      padding: 30px 40px;
+      color: white;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .top-card {
+      margin-bottom: 30px;
+    }
+
+    .bottom-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .upload-card, .output-card {
+      flex: 1 1 300px;
+      min-height: 200px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input[type="file"] {
+      margin: 15px 0;
+    }
+
+    .upload-btn, .predict-btn {
+      padding: 12px 25px;
+      margin: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .upload-btn {
+      background-color: #00b4d8;
+      color: black;
+    }
+
+    .predict-btn {
+      background-color: slateblue;
+      color:white;
+    }
+
+    img.prediction-image {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .output-placeholder {
+      color: #aaa;
+      text-align: center;
+      margin-top: 60px;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .bottom-layout {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">Pattern Sense: Classifying Fabric Patterns using Deep Learning</div>
+
+  <div class="container">
+
+    <div class="card top-card">
+      <h2 style="text-align: center;color:darkorchid">About the Fabric Pattern Classifier</h2>
+      <p>Classifying Fabric Patterns using Deep Learning is a project designed to automate the process of identifying and categorizing fabric patterns using advanced deep learning techniques. The system can be used in various industries such as fashion, textiles, and interior design to streamline pattern recognition tasks.
+        This tool uses deep learning to identify fabric patterns from images.
+        
+
+        
+      </p>
+    </div>
+
+    <div class="bottom-layout">
+
+      <div class="card upload-card">
+        <h2 style="color: darkslateblue;">Upload Fabric Image</h2>
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" required class="upload-btn">
+          <input type="submit" value="Predict" class="predict-btn">
+        </form>
+      </div>
+
+      <div class="card output-card">
+        <h2 style="color: darkslateblue;">Prediction Output</h2>
+        {% if predicted %}
+          <h3>Prediction: {{ label }}</h3>
+          <div style="display: flex; justify-content: center;">
+            <img src="{{ url_for('static', filename='images/output.jpg') }}" alt="Uploaded Image" class="prediction-image">
+          </div>
+        {% else %}
+          <div class="output-placeholder">No prediction yet. Upload a file and click Predict.</div>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
